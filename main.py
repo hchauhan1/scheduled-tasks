@@ -46,23 +46,3 @@ if rain:
     )
     response: SmsResponse = client.sms.send(message)
     print(response)
-
-# df=pd.read_csv("weather_conditions.csv")
-# weather_data=df.to_dict("records")
-# for i in weather_data:
-#     print(f"{i["code"], i["day"], i["night"]}\n")
-
-
-# OWM_Endpoint="https://api.openweathermap.org/data/2.5/forecast"
-# appid="65db29743cacbbf3b6af1dd448ca3407"
-#
-# weater_params={
-#     "lat:": MY_LAT,
-#     "lon:": MY_LON,
-#     "appid:": appid,
-#     "cnt":4
-# }
-# response=requests.get(OWM_Endpoint,params=weater_params)
-# response.raise_for_status()
-# print(response.status_code)
-# data1=response.json()

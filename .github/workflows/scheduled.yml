@@ -44,4 +44,6 @@ jobs:
           WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
           VONAGE_API_KEY: ${{ secrets.VONAGE_API_KEY }}
           VONAGE_API_SECRET: ${{ secrets.VONAGE_API_SECRET }}
+          PRIVATE_NUMBER: ${{ secrets.PRIVATE_NUMBER }}
+          VONAGE_NUMBER: ${{ secrets.VONAGE_NUMBER }}
         run: python main.py

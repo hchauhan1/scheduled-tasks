@@ -7,10 +7,12 @@ import os
 vonage_api_key = os.environ.get("VONAGE_API_KEY")
 vonage_api_secret = os.environ.get("VONAGE_API_SECRET")
 weather_api_key = os.environ.get("WEATHER_API_KEY")
+private_number = os.environ.get("PRIVATE_NUMBER")
+vonage_number= os.environ.get("VONAGE_NUMBER")
 Weather_API_Endpoint = "https://api.weatherapi.com/v1/forecast.json"
 MY_LAT = 40.71427
 MY_LON =-74.00597
-MY_CITY="Denver,CO"
+MY_CITY="New York City,NY"
 
 parameters ={
     "key":weather_api_key,
@@ -38,8 +40,8 @@ for i in weather_codes_next_12_hours:
 if rain:
     client = Vonage(Auth(api_key=vonage_api_key, api_secret=vonage_api_secret))
     message = SmsMessage(
-        to="14093007428",
-        from_="19789864299",
+        to=private_number,
+        from_=vonage_number,
         text="Bring an Umbrella",
     )
     response: SmsResponse = client.sms.send(message)

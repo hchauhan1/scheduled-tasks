@@ -21,29 +21,38 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # - name: Check secrets are configured
-      #   env:
-      #     MY_EMAIL: ${{ secrets.MY_EMAIL }}
-      #     MY_PASSWORD: ${{ secrets.MY_PASSWORD }}
-      #   run: |
-      #     if [ -z "$MY_EMAIL" ]; then
-      #       echo "MY_EMAIL secret is not set!"
-      #       echo "Go to Settings > Secrets > Actions and add it."
-      #       exit 1
-      #     else
-      #       echo "MY_EMAIL is configured"
-      #     fi
+      - name: Check secrets are configured
+        env:
+          WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+          VONAGE_API_SECRET: ${{ secrets.VONAGE_API_SECRET }}
+          VONAGE_API_KEY: ${{ secrets.VONAGE_API_KEY }}
+        run: |
+          if [ -z "$WEATHER_API_KEY" ]; then
+            echo "WEATHER_API_KEY secret is not set!"
+            echo "Go to Settings > Secrets > Actions and add it."
+            exit 1
+          else
+            echo "WEATHER_API_KEY is configured"
+          fi
 
-      #     if [ -z "$MY_PASSWORD" ]; then
-      #       echo "MY_PASSWORD secret is not set!"
-      #       echo "Go to Settings > Secrets > Actions and add it."
-      #       exit 1
-      #     else
-      #       echo "MY_PASSWORD is configured"
-      #     fi
+          if [ -z "$VONAGE_API_SECRET" ]; then
+            echo "VONAGE_API_SECRET secret is not set!"
+            echo "Go to Settings > Secrets > Actions and add it."
+            exit 1
+          else
+            echo "VONAGE_API_SECRET is configured"
+          fi
 
-      #     echo ""
-      #     echo "All secrets are configured!"
+           if [ -z "$VONAGE_API_KEY" ]; then
+            echo "VONAGE_API_KEY secret is not set!"
+            echo "Go to Settings > Secrets > Actions and add it."
+            exit 1
+          else
+            echo "VONAGE_API_KEY is configured"
+          fi
+
+          echo ""
+          echo "All secrets are configured!"
 
       - name: Check required files exist
         run: |
@@ -60,13 +69,6 @@ jobs:
             echo "requirements.txt found"
           else
             echo "requirements.txt not found!"
-            exit 1
-          fi
-
-          if [ -f "birthdays.csv" ]; then
-            echo "birthdays.csv found"
-          else
-            echo "birthdays.csv not found!"
             exit 1
           fi
 

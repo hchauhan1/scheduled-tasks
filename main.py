@@ -1,38 +1,65 @@
-# To run and test the code you need to update 4 places:
-# 1. Change MY_EMAIL/MY_PASSWORD to your own details.
-# 2. Go to your email provider and make it allow less secure apps.
-# 3. Update the SMTP ADDRESS to match your email provider.
-# 4. Update birthdays.csv to contain today's month and day.
-# See the solution video in the 100 Days of Python Course for explainations.
-
-
-from datetime import datetime
-import pandas
-import random
-import smtplib
+import requests
+from vonage import Auth, Vonage
+from vonage_sms import SmsMessage, SmsResponse
+#weather API key
 import os
 
-# import os and use it to get the Github repository secrets
-MY_EMAIL = os.environ.get("MY_EMAIL")
-MY_PASSWORD = os.environ.get("MY_PASSWORD")
+vonage_api_key = os.environ.get("VONAGE_API_KEY")
+vonage_api_secret = os.environ.get("VONAGE_API_SECRET")
+weather_api_key = os.environ.get("WEATHER_API_KEY")
+Weather_API_Endpoint = "https://api.weatherapi.com/v1/forecast.json"
+MY_LAT = 40.71427
+MY_LON =-74.00597
+MY_CITY="Denver,CO"
 
-today = datetime.now()
-today_tuple = (today.month, today.day)
+parameters ={
+    "key":weather_api_key,
+    "q": MY_CITY,
+    "days": 1
+}
 
-data = pandas.read_csv("birthdays.csv")
-birthdays_dict = {(data_row["month"], data_row["day"])                  : data_row for (index, data_row) in data.iterrows()}
-if today_tuple in birthdays_dict:
-    birthday_person = birthdays_dict[today_tuple]
-    file_path = f"letter_templates/letter_{random.randint(1, 3)}.txt"
-    with open(file_path) as letter_file:
-        contents = letter_file.read()
-        contents = contents.replace("[NAME]", birthday_person["name"])
+response=requests.get(Weather_API_Endpoint,params=parameters)
+weather_data=response.json()
+weather_codes_next_12_hours=[]
+hourly_weather_list=weather_data["forecast"]["forecastday"][0]["hour"]
 
-    with smtplib.SMTP("YOUR EMAIL PROVIDER SMTP SERVER ADDRESS") as connection:
-        connection.starttls()
-        connection.login(MY_EMAIL, MY_PASSWORD)
-        connection.sendmail(
-            from_addr=MY_EMAIL,
-            to_addrs=birthday_person["email"],
-            msg=f"Subject:Happy Birthday!\n\n{contents}"
-        )
+for i in hourly_weather_list[0:12]:
+    weather_codes_next_12_hours.append(i["condition"]["code"])
+
+rainy_if=1063
+
+rain=False
+
+for i in weather_codes_next_12_hours:
+    if i>=rainy_if:
+        rain=True
+
+if rain:
+    client = Vonage(Auth(api_key=vonage_api_key, api_secret=vonage_api_secret))
+    message = SmsMessage(
+        to="14093007428",
+        from_="19789864299",
+        text="Bring an Umbrella",
+    )
+    response: SmsResponse = client.sms.send(message)
+    print(response)
+
+# df=pd.read_csv("weather_conditions.csv")
+# weather_data=df.to_dict("records")
+# for i in weather_data:
+#     print(f"{i["code"], i["day"], i["night"]}\n")
+
+
+# OWM_Endpoint="https://api.openweathermap.org/data/2.5/forecast"
+# appid="65db29743cacbbf3b6af1dd448ca3407"
+#
+# weater_params={
+#     "lat:": MY_LAT,
+#     "lon:": MY_LON,
+#     "appid:": appid,
+#     "cnt":4
+# }
+# response=requests.get(OWM_Endpoint,params=weater_params)
+# response.raise_for_status()
+# print(response.status_code)
+# data1=response.json()

@@ -19,6 +19,7 @@ parameters ={
 }
 
 response=requests.get(Weather_API_Endpoint,params=parameters)
+print(response.text)
 weather_data=response.json()
 weather_codes_next_12_hours=[]
 hourly_weather_list=weather_data["forecast"]["forecastday"][0]["hour"]

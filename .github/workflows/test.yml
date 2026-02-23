@@ -26,6 +26,8 @@ jobs:
           WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
           VONAGE_API_SECRET: ${{ secrets.VONAGE_API_SECRET }}
           VONAGE_API_KEY: ${{ secrets.VONAGE_API_KEY }}
+          VONAGE_NUMBER: ${{ secrets.VONAGE_NUMBER }}
+          PRIVATE_NUMBER: ${{ secrets.PRIVATE_NUMBER }}
         run: |
           if [ -z "$WEATHER_API_KEY" ]; then
             echo "WEATHER_API_KEY secret is not set!"

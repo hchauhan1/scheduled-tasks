@@ -30,7 +30,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.14'
 
       - name: Install dependencies
         run: |
@@ -38,9 +38,9 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run script
-        env:
-          # Your secrets are available as environment variables
-          # Add more secrets in Settings > Secrets > Actions
-          MY_EMAIL: ${{ secrets.MY_EMAIL }}
-          MY_PASSWORD: ${{ secrets.MY_PASSWORD }}
+        # env:
+        #   # Your secrets are available as environment variables
+        #   # Add more secrets in Settings > Secrets > Actions
+        #   MY_EMAIL: ${{ secrets.MY_EMAIL }}
+        #   MY_PASSWORD: ${{ secrets.MY_PASSWORD }}
         run: python main.py

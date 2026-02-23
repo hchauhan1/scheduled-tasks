@@ -38,9 +38,10 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run script
-        # env:
-        #   # Your secrets are available as environment variables
-        #   # Add more secrets in Settings > Secrets > Actions
-        #   MY_EMAIL: ${{ secrets.MY_EMAIL }}
-        #   MY_PASSWORD: ${{ secrets.MY_PASSWORD }}
+        env:
+          # Your secrets are available as environment variables
+          # Add more secrets in Settings > Secrets > Actions
+          WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+          VONAGE_API_KEY: ${{ secrets.VONAGE_API_KEY }}
+          VONAGE_API_SECRET: ${{ secrets.VONAGE_API_SECRET }}
         run: python main.py

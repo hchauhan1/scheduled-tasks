@@ -43,12 +43,28 @@ jobs:
             echo "VONAGE_API_SECRET is configured"
           fi
 
-           if [ -z "$VONAGE_API_KEY" ]; then
+          if [ -z "$VONAGE_API_KEY" ]; then
             echo "VONAGE_API_KEY secret is not set!"
             echo "Go to Settings > Secrets > Actions and add it."
             exit 1
           else
             echo "VONAGE_API_KEY is configured"
+          fi
+
+          if [ -z "$VONAGE_NUMBER" ]; then
+            echo "VONAGE_NUMBER secret is not set!"
+            echo "Go to Settings > Secrets > Actions and add it."
+            exit 1
+          else
+            echo "VONAGE_NUMBER is configured"
+          fi
+
+          if [ -z "$PRIVATE_NUMBER" ]; then
+            echo "PRIVATE_NUMBER secret is not set!"
+            echo "Go to Settings > Secrets > Actions and add it."
+            exit 1
+          else
+            echo "PRIVATE_NUMBER is configured"
           fi
 
           echo ""

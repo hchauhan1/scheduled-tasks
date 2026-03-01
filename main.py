@@ -12,7 +12,7 @@ vonage_number= os.environ.get("VONAGE_NUMBER")
 Weather_API_Endpoint = "https://api.weatherapi.com/v1/forecast.json"
 MY_LAT = 40.71427
 MY_LON =-74.00597
-MY_CITY="New York City,NY"
+MY_CITY="Denver,CO"
 
 parameters ={
     "key":weather_api_key,
